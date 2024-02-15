@@ -138,17 +138,24 @@ fig_qtd_categorias.update_layout(yaxis_title = 'Quantidade')
 
 
 ## Visualização no Streamlit
+coluna3 = st.columns(1)
+with coluna3:
+    coluna4, coluna5 = st.columns(5)
+    with coluna4:
+        st.metric('Receita', formata_numero(dados['Preço'].sum(), 'R$'))
+    with coluna5:
+        st.metric('Quantidade de vendas', formata_numero(dados.shape[0]), use_)
+        
+
 aba1, aba2, aba3 = st.tabs(['Receita', 'Quantidade de vendas', 'Vendedores'])
 
 with aba1:
     coluna1,coluna2 = st.columns(2)
-    with coluna1:
-        st.metric('Receita', formata_numero(dados['Preço'].sum(), 'R$'))
+    with coluna1:        
         st.plotly_chart(fig_mapa_receita, use_container_width= True)
         st.plotly_chart(fig_receita_estados, use_container_width= True)
 
-    with coluna2:
-        st.metric('Quantidade de vendas', formata_numero(dados.shape[0]))
+    with coluna2:        
         st.plotly_chart(fig_receita_mensal, use_container_width= True)
         st.plotly_chart(fig_receita_categorias, use_container_width= True)
 
@@ -185,4 +192,4 @@ with aba3:
                                         y = vendedores[['count']].sort_values('count', ascending= False).head(qtd_vendedores).index,
                                         text_auto= True,
                                         title= f'Top {qtd_vendedores} vendedores (Quantidade de vendas)')
-        st.plotly_chart(fig_vendas_vendedores, use_container_width=True)        
+        st.plotly_chart(fig_vendas_vendedores, use_container_width=True)
