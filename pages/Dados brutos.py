@@ -42,7 +42,7 @@ with st.sidebar.expander('Vendedor'):
 with st.sidebar.expander('Local da compra'):
     local_compra = st.multiselect('Local da compra', dados['Local da compra'].unique(), dados['Local da compra'].unique())
 with st.sidebar.expander('Avaliação da Compra'):
-    avaliacao_compra = st.slider('Selecione a nota', 1,5 , (1,5))
+    avaliacao_compra = avaliacao_compra = st.multiselect('Selecione a nota', sorted(dados['Avaliação da compra'].unique()), sorted(dados['Avaliação da compra'].unique()))
 with st.sidebar.expander('Tipo de pagamento'):
     tipo_pagamento = st.multiselect('Selecione o tiopo de pagamento', dados['Tipo de pagamento'].unique(), dados['Tipo de pagamento'].unique())
 with st.sidebar.expander('Quantidade de parelas'):
