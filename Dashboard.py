@@ -138,14 +138,13 @@ fig_qtd_categorias.update_layout(yaxis_title = 'Quantidade')
 
 
 ## Visualização no Streamlit
-coluna3 = st.columns(1)
+
+coluna3, coluna4 = st.columns(2)
 with coluna3:
-    coluna4, coluna5 = st.columns(5)
-    with coluna4:
-        st.metric('Receita', formata_numero(dados['Preço'].sum(), 'R$'))
-    with coluna5:
-        st.metric('Quantidade de vendas', formata_numero(dados.shape[0]), use_)
-        
+    st.metric('Receita', formata_numero(dados['Preço'].sum(), 'R$'))
+with coluna4:
+    st.metric('Quantidade de vendas', formata_numero(dados.shape[0]))
+
 
 aba1, aba2, aba3 = st.tabs(['Receita', 'Quantidade de vendas', 'Vendedores'])
 
@@ -192,4 +191,4 @@ with aba3:
                                         y = vendedores[['count']].sort_values('count', ascending= False).head(qtd_vendedores).index,
                                         text_auto= True,
                                         title= f'Top {qtd_vendedores} vendedores (Quantidade de vendas)')
-        st.plotly_chart(fig_vendas_vendedores, use_container_width=True)
+        st.plotly_chart(fig_vendas_vendedores, use_container_width=True)  
