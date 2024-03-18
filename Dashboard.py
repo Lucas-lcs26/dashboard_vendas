@@ -105,9 +105,11 @@ fig_receita_estados = px.bar(receita_estados.head(),
 fig_receita_estados.update_layout(yaxis_title = 'Receita')
 
 fig_receita_categorias = px.bar(receita_categorias,
+                                x= receita_categorias.index,
+                                y = 'Preço',
                                 text_auto= True,
                                 title= 'Receita por categoria',
-                                width = 500,
+                                width = 600,
                                 height= 500)
 fig_receita_categorias.update_layout(yaxis_title = 'Receita')
 
@@ -148,9 +150,12 @@ fig_qtd_mensal.update_layout(yaxis_title = 'Quantidade')
 
 fig_qtd_categorias = px.bar(qtd_categorias,
                                 text_auto= True,
+                                x = qtd_categorias.index,
+                                y = 'Preço',
                                 title= 'Quantidade por categoria',
-                                width = 500,
-                                height = 500)
+                                width = 600,
+                                height = 500,
+                                )
 fig_qtd_categorias.update_layout(yaxis_title = 'Quantidade')
 
 
@@ -206,4 +211,4 @@ with aba3:
                                         text_auto= True,
                                         title= f'Top {qtd_vendedores} vendedores (Quantidade de vendas)')
         fig_vendas_vendedores.update_layout(xaxis_title="Nº Vendas", yaxis_title="")
-        st.plotly_chart(fig_vendas_vendedores, use_container_width=True)
+        st.plotly_chart(fig_vendas_vendedores, use_container_width=True)        
