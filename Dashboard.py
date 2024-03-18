@@ -79,7 +79,9 @@ fig_mapa_receita = px.scatter_geo(receita_estados,
                                   template= 'seaborn',
                                   hover_name = 'Local da compra',
                                   hover_data= {'lat': False, 'lon': False},
-                                  title = 'Receita por estado')
+                                  title = 'Receita por estado',
+                                  width = 750,
+                                  height = 750)
 
 fig_receita_mensal = px.line(receita_mensal,
                              x = 'Mes',
@@ -88,19 +90,25 @@ fig_receita_mensal = px.line(receita_mensal,
                              range_y = (0,receita_mensal.max()),
                              color = 'Ano',
                              line_dash = 'Ano',
-                             title= 'Receita Mensal')
+                             title= 'Receita Mensal',
+                             width = 500,
+                             height = 500)
 fig_receita_mensal.update_layout(yaxis_title = 'Receita')
 
 fig_receita_estados = px.bar(receita_estados.head(),
                              x = 'Local da compra',
                              y = 'Preço',
                              text_auto = True,
-                             title = 'Top estados (receita)')
+                             title = 'Top estados (receita)',
+                             width = 500,
+                             height = 500)
 fig_receita_estados.update_layout(yaxis_title = 'Receita')
 
 fig_receita_categorias = px.bar(receita_categorias,
                                 text_auto= True,
-                                title= 'Receita por categoria')
+                                title= 'Receita por categoria',
+                                width = 500,
+                                height= 500)
 fig_receita_categorias.update_layout(yaxis_title = 'Receita')
 
 #aba2
@@ -112,7 +120,10 @@ fig_mapa_qtd = px.scatter_geo(qtd_estados,
                               template= 'seaborn',
                               hover_name= 'Local da compra',
                               hover_data= {'lat': False, 'lon': False},
-                              title= 'Quantidade de vendas por estado')
+                              title= 'Quantidade de vendas por estado',
+                              width = 750,
+                              height = 750)
+
 
 fig_qtd_mensal = px.line(qtd_mensal,
                          x = 'Mes',
@@ -121,19 +132,25 @@ fig_qtd_mensal = px.line(qtd_mensal,
                          range_y= (0, qtd_mensal.max()),
                          color = 'Ano',
                          line_dash= 'Ano',
-                         title= 'Quantidade mensal')
+                         title= 'Quantidade mensal',
+                         width = 500,
+                         height= 500)
 fig_qtd_mensal.update_layout(yaxis_title = 'Quantidade')
 
 fig_qtd_estados = px.bar(qtd_estados.head(),
                          x = 'Local da compra',
                          y = 'Preço',
                          text_auto = True,
-                         title = 'Top estados (quantidade)')
+                         title = 'Top estados (quantidade)',
+                         width = 500,
+                         height = 500)
 fig_qtd_mensal.update_layout(yaxis_title = 'Quantidade')
 
 fig_qtd_categorias = px.bar(qtd_categorias,
                                 text_auto= True,
-                                title= 'Quantidade por categoria')
+                                title= 'Quantidade por categoria',
+                                width = 500,
+                                height = 500)
 fig_qtd_categorias.update_layout(yaxis_title = 'Quantidade')
 
 
@@ -151,8 +168,8 @@ aba1, aba2, aba3 = st.tabs(['Receita', 'Quantidade de vendas', 'Vendedores'])
 with aba1:
     coluna1,coluna2 = st.columns(2)
     with coluna1:        
-        st.plotly_chart(fig_mapa_receita, use_container_width= True)
         st.plotly_chart(fig_receita_estados, use_container_width= True)
+        st.plotly_chart(fig_mapa_receita, use_container_width= True)
 
     with coluna2:        
         st.plotly_chart(fig_receita_mensal, use_container_width= True)
@@ -162,13 +179,11 @@ with aba1:
 with aba2:
     coluna1,coluna2 = st.columns(2)
     with coluna1:
-        st.metric('Receita', formata_numero(dados['Preço'].sum(), 'R$'))
-        st.plotly_chart(fig_mapa_qtd,use_container_width= True)
         st.plotly_chart(fig_qtd_estados, use_container_width= True)
+        st.plotly_chart(fig_mapa_qtd,use_container_width= True)
        
 
     with coluna2:
-        st.metric('Quantidade de vendas', formata_numero(dados.shape[0]))
         st.plotly_chart(fig_qtd_mensal, use_container_width= True)
         st.plotly_chart(fig_qtd_categorias, use_container_width= True)
        
@@ -176,19 +191,19 @@ with aba3:
     qtd_vendedores = st.number_input('Quantidade de vendedores', 2, 10, 5)
     coluna1,coluna2 = st.columns(2)
     with coluna1:
-        st.metric('Receita', formata_numero(dados['Preço'].sum(), 'R$'))
         fig_receita_vendedores = px.bar(vendedores[['sum']].sort_values('sum', ascending= False).head(qtd_vendedores),
                                         x = 'sum',
                                         y = vendedores[['sum']].sort_values('sum', ascending= False).head(qtd_vendedores).index,
                                         text_auto= True,
                                         title= f'Top {qtd_vendedores} vendedores (receita)')
+        fig_receita_vendedores.update_layout(xaxis_title="Em R$", yaxis_title="")
         st.plotly_chart(fig_receita_vendedores, use_container_width= True)
         
     with coluna2:
-        st.metric('Quantidade de vendas', formata_numero(dados.shape[0]))
         fig_vendas_vendedores = px.bar(vendedores[['count']].sort_values('count', ascending= False).head(qtd_vendedores),
                                         x = 'count',
                                         y = vendedores[['count']].sort_values('count', ascending= False).head(qtd_vendedores).index,
                                         text_auto= True,
                                         title= f'Top {qtd_vendedores} vendedores (Quantidade de vendas)')
-        st.plotly_chart(fig_vendas_vendedores, use_container_width=True)  
+        fig_vendas_vendedores.update_layout(xaxis_title="Nº Vendas", yaxis_title="")
+        st.plotly_chart(fig_vendas_vendedores, use_container_width=True)
